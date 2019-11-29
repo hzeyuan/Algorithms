@@ -47,6 +47,11 @@ class animal:
     def __delattr__(self, item):
         print("删除属性{}".format(item))
         self.__dict__.pop(item)
+    def __iter__(self): # 让对象可以循环
+        return iter([self.name])
+    def __call__(self, *args, **kwargs):
+        self.name = args[0]
+
 a = animal("dog")
 
 b =animal("tiger")
@@ -61,3 +66,14 @@ a.key = 'value' # 设置新的属性
 del a.key # 删除属性key
 # 删除属性
 print(a.key) #没有key属性,调用了getattr方法
+
+a[1:1] = [1,2,3,4,5]
+
+for n in a:
+    print("循环",n) # 循环 dog
+
+a('dogggg') # 触发 __call__()
+print(a.name) #a.name = dogggg
+print(a.__module__) # 当前操作对象所在的模块
+print(a.__class__) # 当前操作对象是什么类
+print(a.__dict__) # 对象中的属性
